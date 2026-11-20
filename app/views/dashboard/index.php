@@ -94,6 +94,11 @@ $user = $_SESSION['user'] ?? [
                             <i class="fa-solid fa-users me-1"></i> Member
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="index.php?action=pengguna" class="nav-link text-white px-2">
+                            <i class="fa-solid fa-user-gear me-1"></i> Pengguna
+                        </a>
+                    </li>
                     <li class="nav-item me-lg-2 text-white-50 small">
                         Halo, <span
                             class="text-white fw-semibold"><?= htmlspecialchars($user['nama_lengkap']); ?></span>
@@ -128,7 +133,7 @@ $user = $_SESSION['user'] ?? [
         <!-- Kartu Ringkasan / Menu Cepat -->
         <div class="row g-4">
             <!-- Card 1: Pemesanan -->
-            <div class="col-md-4">
+            <div class="col-md-6 col-lg-3">
                 <div class="card card-stat p-4 bg-white h-100">
                     <div class="d-flex align-items-center mb-3">
                         <div class="brand-icon-box p-3 rounded-3 fs-4 me-3">
@@ -148,7 +153,7 @@ $user = $_SESSION['user'] ?? [
             </div>
 
             <!-- Card 2: Member / Pelanggan -->
-            <div class="col-md-4">
+            <div class="col-md-6 col-lg-3">
                 <div class="card card-stat p-4 bg-white h-100">
                     <div class="d-flex align-items-center mb-3">
                         <div class="brand-icon-box p-3 rounded-3 fs-4 me-3">
@@ -168,7 +173,7 @@ $user = $_SESSION['user'] ?? [
             </div>
 
             <!-- Card 3: Model Pakaian -->
-            <div class="col-md-4">
+            <div class="col-md-6 col-lg-3">
                 <div class="card card-stat p-4 bg-white h-100">
                     <div class="d-flex align-items-center mb-3">
                         <div class="brand-icon-box p-3 rounded-3 fs-4 me-3">
@@ -183,6 +188,26 @@ $user = $_SESSION['user'] ?? [
                         jahitan.</p>
                     <a href="index.php?action=model_pakaian" class="btn btn-outline-custom btn-sm mt-auto">
                         Kelola Model <i class="fa-solid fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 4: Pengguna -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card card-stat p-4 bg-white h-100">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="brand-icon-box p-3 rounded-3 fs-4 me-3">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-1 small text-uppercase fw-bold">Modul</h6>
+                            <h5 class="fw-bold text-dark mb-0">Pengguna</h5>
+                        </div>
+                    </div>
+                    <p class="text-muted small mb-3">Kelola akun admin dan pegawai, hak akses role, serta status akun.
+                    </p>
+                    <a href="index.php?action=pengguna" class="btn btn-custom btn-sm mt-auto">
+                        Kelola Pengguna <i class="fa-solid fa-arrow-right ms-1"></i>
                     </a>
                 </div>
             </div>

@@ -13,7 +13,8 @@ class PenggunaModel {
 
     // Ambil semua data pengguna
     public function getAll() {
-        $sql = "SELECT * FROM {$this->table} ORDER BY id DESC";
+        $sql = "SELECT id, nama_lengkap, email, no_telepon, nama_pengguna, role, status, created_at, updated_at
+                FROM {$this->table} ORDER BY id DESC";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -21,13 +22,15 @@ class PenggunaModel {
 
     // Cari pengguna berdasarkan ID
     public function findById($id) {
-        $sql = "SELECT * FROM {$this->table} WHERE id = :id LIMIT 1";
+        $sql = "SELECT id, nama_lengkap, email, no_telepon, nama_pengguna, role, status, created_at, updated_at
+                FROM {$this->table} WHERE id = :id LIMIT 1";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['id' => $id]);
-        return $stmt->fetch();
+        $row = $stmt->fetch();
+        return $row ?: null;
     }
 
-   // Cari pengguna berdasarkan username atau email (digunakan untuk login)
+    // Cari pengguna berdasarkan username atau email (digunakan untuk login)
     public function findByUsernameOrEmail($usernameOrEmail) {
         $sql = "SELECT * FROM {$this->table} WHERE nama_pengguna = :username OR email = :email LIMIT 1";
         $stmt = $this->db->prepare($sql);
@@ -36,6 +39,25 @@ class PenggunaModel {
             'email'    => $usernameOrEmail
         ]);
         return $stmt->fetch();
+    }
+
+    // Cek apakah nama_pengguna atau email sudah dipakai pengguna lain
+    public function existsByUsernameOrEmail($username, $email, $excludeId = null) {
+        $sql = "SELECT id FROM {$this->table} WHERE (nama_pengguna = :username OR email = :email)";
+        $params = [
+            'username' => $username,
+            'email'    => $email
+        ];
+
+        if ($excludeId !== null) {
+            $sql .= " AND id != :id";
+            $params['id'] = $excludeId;
+        }
+
+        $sql .= " LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+        return (bool) $stmt->fetch();
     }
 
     // Tambah pengguna baru
@@ -65,7 +87,8 @@ class PenggunaModel {
                     nama_pengguna = :nama_pengguna, 
                     kata_sandi = :kata_sandi, 
                     role = :role, 
-                    status = :status 
+                    status = :status,
+                    updated_at = NOW()
                     WHERE id = :id";
             
             $params = [
@@ -85,7 +108,8 @@ class PenggunaModel {
                     no_telepon = :no_telepon, 
                     nama_pengguna = :nama_pengguna, 
                     role = :role, 
-                    status = :status 
+                    status = :status,
+                    updated_at = NOW()
                     WHERE id = :id";
             
             $params = [

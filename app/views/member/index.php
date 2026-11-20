@@ -107,8 +107,18 @@ $tipe    = $tipe ?? (($_GET['tipe'] ?? 'success') === 'danger' ? 'danger' : 'suc
                                     <?php endif; ?>
                                 </td>
                                 <td class="text-nowrap">
-                                    <a href="index.php?action=member_edit&id=<?= (int) $row['id'] ?>"
-                                        class="btn btn-warning btn-sm">Edit</a>
+                                    <button type="button" class="btn btn-warning btn-sm btn-edit-member"
+                                        data-bs-toggle="modal" data-bs-target="#modalEditMember"
+                                        data-id="<?= (int) $row['id'] ?>"
+                                        data-nama_lengkap="<?= htmlspecialchars($row['nama_lengkap'], ENT_QUOTES) ?>"
+                                        data-nama_pic="<?= htmlspecialchars($row['nama_pic'] ?? '', ENT_QUOTES) ?>"
+                                        data-no_telepon="<?= htmlspecialchars($row['no_telepon'], ENT_QUOTES) ?>"
+                                        data-email="<?= htmlspecialchars($row['email'] ?? '', ENT_QUOTES) ?>"
+                                        data-alamat="<?= htmlspecialchars($row['alamat'], ENT_QUOTES) ?>"
+                                        data-keterangan="<?= htmlspecialchars($row['keterangan'] ?? '', ENT_QUOTES) ?>"
+                                        data-status="<?= htmlspecialchars($row['status'], ENT_QUOTES) ?>">
+                                        Edit
+                                    </button>
                                     <a href="index.php?action=member_delete&id=<?= (int) $row['id'] ?>"
                                         class="btn btn-danger btn-sm"
                                         onclick="return confirm('Yakin ingin menghapus member ini?')">Hapus</a>
@@ -127,22 +137,43 @@ $tipe    = $tipe ?? (($_GET['tipe'] ?? 'success') === 'danger' ? 'danger' : 'suc
         </div>
     </div>
 
-    <!-- Popup Form Tambah Member -->
+    <!-- Popup Form Tambah & Edit Member -->
     <?php require_once __DIR__ . '/create.php'; ?>
+    <?php require_once __DIR__ . '/update.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <?php if (isset($_GET['open_create']) && $_GET['open_create'] === '1'): ?>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const modalEl = document.getElementById('modalTambah');
-        if (modalEl) {
-            new bootstrap.Modal(modalEl).show();
+        <?php if (isset($_GET['open_create']) && $_GET['open_create'] === '1'): ?>
+        const modalTambahEl = document.getElementById('modalTambah');
+        if (modalTambahEl) {
+            new bootstrap.Modal(modalTambahEl).show();
+        }
+        <?php endif; ?>
+
+        const modalEditEl = document.getElementById('modalEditMember');
+        if (modalEditEl) {
+            modalEditEl.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                if (!button) return;
+
+                document.getElementById('edit_id').value = button.getAttribute('data-id') || '';
+                document.getElementById('edit_nama_lengkap').value = button.getAttribute(
+                    'data-nama_lengkap') || '';
+                document.getElementById('edit_nama_pic').value = button.getAttribute('data-nama_pic') ||
+                    '';
+                document.getElementById('edit_no_telepon').value = button.getAttribute(
+                    'data-no_telepon') || '';
+                document.getElementById('edit_email').value = button.getAttribute('data-email') || '';
+                document.getElementById('edit_alamat').value = button.getAttribute('data-alamat') || '';
+                document.getElementById('edit_keterangan').value = button.getAttribute(
+                    'data-keterangan') || '';
+                document.getElementById('edit_status').value = button.getAttribute('data-status') ||
+                    'Aktif';
+            });
         }
     });
     </script>
-    <?php endif; ?>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

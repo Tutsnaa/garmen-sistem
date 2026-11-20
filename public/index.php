@@ -5,6 +5,7 @@ session_start();
 require_once __DIR__ . '/../app/config/database.php';
 require_once __DIR__ . '/../app/controllers/AuthController.php';
 require_once __DIR__ . '/../app/controllers/MemberController.php';
+require_once __DIR__ . '/../app/controllers/PenggunaController.php';
 
 // 2. Tangkap parameter action dari URL (Default ke 'login' jika belum login, atau 'dashboard' jika sudah)
 $action = $_GET['action'] ?? (isset($_SESSION['user']) ? 'dashboard' : 'login');
@@ -44,6 +45,53 @@ switch ($action) {
     case 'dashboard':
         cekLogin();
         require_once __DIR__ . '/../app/views/dashboard/index.php';
+        break;
+
+
+        // ==========================================
+    // PENGGUNA ROUTES
+    // ==========================================
+    case 'pengguna':
+        cekLogin();
+        $penggunaController = new PenggunaController($pdo);
+        $penggunaList = $penggunaController->index();
+        $pesan = $_GET['pesan'] ?? null;
+        $tipe  = ($_GET['tipe'] ?? 'success') === 'danger' ? 'danger' : 'success';
+        require_once __DIR__ . '/../app/views/pengguna/index.php';
+        break;
+
+    case 'pengguna_store':
+        cekLogin();
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: index.php?action=pengguna');
+            exit;
+        }
+        $penggunaController = new PenggunaController($pdo);
+        $result = $penggunaController->store($_POST);
+        $type = $result['success'] ? 'success' : 'danger';
+        $openCreateParam = $result['success'] ? '' : '&open_create=1';
+        header('Location: index.php?action=pengguna&tipe=' . $type . $openCreateParam . '&pesan=' . urlencode($result['message']));
+        exit;
+
+    case 'pengguna_edit':
+    case 'pengguna_update':
+        cekLogin();
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+        if (!$id || $_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: index.php?action=pengguna&tipe=danger&pesan=' . urlencode('Permintaan edit pengguna tidak valid.'));
+            exit;
+        }
+
+        $penggunaController = new PenggunaController($pdo);
+        $result = $penggunaController->update($id, $_POST);
+        $type = $result['success'] ? 'success' : 'danger';
+
+        header('Location: index.php?action=pengguna&tipe=' . $type . '&pesan=' . urlencode($result['message']));
+        exit;
+
+    case 'pengguna_delete':
+        cekLogin();
+        require_once __DIR__ . '/../app/views/pengguna/delete.php';
         break;
 
     // ==========================================

@@ -22,6 +22,7 @@ $user = $_SESSION['user'] ?? [
     :root {
         --primary-color: #2b5748;
         --primary-hover: #204135;
+        --primary-soft: rgba(43, 87, 72, 0.1);
     }
 
     body {
@@ -33,25 +34,44 @@ $user = $_SESSION['user'] ?? [
         background-color: var(--primary-color);
     }
 
+    .brand-icon-box {
+        background-color: var(--primary-soft);
+        color: var(--primary-color);
+    }
+
     .card-stat {
         border: none;
         border-radius: 0.75rem;
         box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-        transition: transform 0.2s;
+        transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .card-stat:hover {
         transform: translateY(-3px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
     }
 
     .btn-custom {
         background-color: var(--primary-color);
-        color: white;
+        border-color: var(--primary-color);
+        color: #fff;
     }
 
     .btn-custom:hover {
         background-color: var(--primary-hover);
-        color: white;
+        border-color: var(--primary-hover);
+        color: #fff;
+    }
+
+    .btn-outline-custom {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+
+    .btn-outline-custom:hover {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        color: #fff;
     }
     </style>
 </head>
@@ -68,8 +88,13 @@ $user = $_SESSION['user'] ?? [
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav align-items-center">
-                    <li class="nav-item me-3 text-white-50 small">
+                <ul class="navbar-nav align-items-center gap-2">
+                    <li class="nav-item">
+                        <a href="index.php?action=member" class="nav-link text-white px-2">
+                            <i class="fa-solid fa-users me-1"></i> Member
+                        </a>
+                    </li>
+                    <li class="nav-item me-lg-2 text-white-50 small">
                         Halo, <span
                             class="text-white fw-semibold"><?= htmlspecialchars($user['nama_lengkap']); ?></span>
                         <span class="badge bg-light text-dark ms-1"><?= htmlspecialchars($user['role']); ?></span>
@@ -89,7 +114,8 @@ $user = $_SESSION['user'] ?? [
         <!-- Banner Sambutan -->
         <div class="row mb-4">
             <div class="col-12">
-                <div class="p-4 p-md-5 bg-white rounded-4 shadow-sm border-start border-4 border-success">
+                <div class="p-4 p-md-5 bg-white rounded-4 shadow-sm border-start border-4"
+                    style="border-color: var(--primary-color) !important;">
                     <h2 class="fw-bold text-dark mb-2">Selamat Datang di Panel Utama</h2>
                     <p class="text-muted mb-0">
                         Sistem Informasi Pengelolaan Pesanan Garmen & Tailoring. Pilih menu di bawah atau navigasi
@@ -105,7 +131,7 @@ $user = $_SESSION['user'] ?? [
             <div class="col-md-4">
                 <div class="card card-stat p-4 bg-white h-100">
                     <div class="d-flex align-items-center mb-3">
-                        <div class="bg-light p-3 rounded-3 text-success fs-4 me-3">
+                        <div class="brand-icon-box p-3 rounded-3 fs-4 me-3">
                             <i class="fa-solid fa-clipboard-list"></i>
                         </div>
                         <div>
@@ -115,8 +141,9 @@ $user = $_SESSION['user'] ?? [
                     </div>
                     <p class="text-muted small mb-3">Kelola pesanan pakaian baru, detail item jahitan, dan cek status
                         progres produksi.</p>
-                    <a href="#" class="btn btn-outline-success btn-sm mt-auto">Kelola Pemesanan <i
-                            class="fa-solid fa-arrow-right ms-1"></i></a>
+                    <a href="index.php?action=pemesanan" class="btn btn-outline-custom btn-sm mt-auto">
+                        Kelola Pemesanan <i class="fa-solid fa-arrow-right ms-1"></i>
+                    </a>
                 </div>
             </div>
 
@@ -124,7 +151,7 @@ $user = $_SESSION['user'] ?? [
             <div class="col-md-4">
                 <div class="card card-stat p-4 bg-white h-100">
                     <div class="d-flex align-items-center mb-3">
-                        <div class="bg-light p-3 rounded-3 text-primary fs-4 me-3">
+                        <div class="brand-icon-box p-3 rounded-3 fs-4 me-3">
                             <i class="fa-solid fa-users"></i>
                         </div>
                         <div>
@@ -132,10 +159,11 @@ $user = $_SESSION['user'] ?? [
                             <h5 class="fw-bold text-dark mb-0">Data Member</h5>
                         </div>
                     </div>
-                    <p class="text-muted small mb-3">Daftar pelanggan, pengukuran badan (fitting), dan riwayat pesanan
-                        pelanggan.</p>
-                    <a href="#" class="btn btn-outline-primary btn-sm mt-auto">Kelola Member <i
-                            class="fa-solid fa-arrow-right ms-1"></i></a>
+                    <p class="text-muted small mb-3">Daftar pelanggan, PIC, kontak, alamat, dan status keaktifan
+                        member.</p>
+                    <a href="index.php?action=member" class="btn btn-custom btn-sm mt-auto">
+                        Kelola Member <i class="fa-solid fa-arrow-right ms-1"></i>
+                    </a>
                 </div>
             </div>
 
@@ -143,7 +171,7 @@ $user = $_SESSION['user'] ?? [
             <div class="col-md-4">
                 <div class="card card-stat p-4 bg-white h-100">
                     <div class="d-flex align-items-center mb-3">
-                        <div class="bg-light p-3 rounded-3 text-warning fs-4 me-3">
+                        <div class="brand-icon-box p-3 rounded-3 fs-4 me-3">
                             <i class="fa-solid fa-shirt"></i>
                         </div>
                         <div>
@@ -153,8 +181,9 @@ $user = $_SESSION['user'] ?? [
                     </div>
                     <p class="text-muted small mb-3">Katalog jenis pakaian, referensi model, dan estimasi harga dasar
                         jahitan.</p>
-                    <a href="#" class="btn btn-outline-warning btn-sm mt-auto text-dark">Kelola Model <i
-                            class="fa-solid fa-arrow-right ms-1"></i></a>
+                    <a href="index.php?action=model_pakaian" class="btn btn-outline-custom btn-sm mt-auto">
+                        Kelola Model <i class="fa-solid fa-arrow-right ms-1"></i>
+                    </a>
                 </div>
             </div>
         </div>

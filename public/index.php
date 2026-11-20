@@ -6,6 +6,7 @@ require_once __DIR__ . '/../app/config/database.php';
 require_once __DIR__ . '/../app/controllers/AuthController.php';
 require_once __DIR__ . '/../app/controllers/MemberController.php';
 require_once __DIR__ . '/../app/controllers/PenggunaController.php';
+require_once __DIR__ . '/../app/controllers/ModelPakaianController.php';
 
 // 2. Tangkap parameter action dari URL (Default ke 'login' jika belum login, atau 'dashboard' jika sudah)
 $action = $_GET['action'] ?? (isset($_SESSION['user']) ? 'dashboard' : 'login');
@@ -47,8 +48,7 @@ switch ($action) {
         require_once __DIR__ . '/../app/views/dashboard/index.php';
         break;
 
-
-        // ==========================================
+    // ==========================================
     // PENGGUNA ROUTES
     // ==========================================
     case 'pengguna':
@@ -152,6 +152,33 @@ switch ($action) {
     case 'member_delete':
         cekLogin();
         require_once __DIR__ . '/../app/views/member/delete.php';
+        break;
+
+    // ==========================================
+    // MODEL PAKAIAN ROUTES
+    // ==========================================
+    case 'model_pakaian':
+        cekLogin();
+        $modelPakaianController = new ModelPakaianController($pdo);
+        $modelPakaianController->index();
+        break;
+
+    case 'model_pakaian_store':
+        cekLogin();
+        $modelPakaianController = new ModelPakaianController($pdo);
+        $modelPakaianController->store();
+        break;
+
+    case 'model_pakaian_update':
+        cekLogin();
+        $modelPakaianController = new ModelPakaianController($pdo);
+        $modelPakaianController->update();
+        break;
+
+    case 'model_pakaian_delete':
+        cekLogin();
+        $modelPakaianController = new ModelPakaianController($pdo);
+        $modelPakaianController->delete();
         break;
 
     // ==========================================

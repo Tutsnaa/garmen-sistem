@@ -133,7 +133,7 @@ $user = $_SESSION['user'] ?? [
         <!-- Kartu Ringkasan / Menu Cepat -->
         <div class="row g-4">
             <!-- Card 1: Pemesanan -->
-            <div class="col-md-6 col-lg-3">
+              <div class="col-md-6 col-lg-3">
                 <div class="card card-stat p-4 bg-white h-100">
                     <div class="d-flex align-items-center mb-3">
                         <div class="brand-icon-box p-3 rounded-3 fs-4 me-3">
@@ -186,7 +186,7 @@ $user = $_SESSION['user'] ?? [
                     </div>
                     <p class="text-muted small mb-3">Katalog jenis pakaian, referensi model, dan estimasi harga dasar
                         jahitan.</p>
-                    <a href="index.php?action=model_pakaian" class="btn btn-outline-custom btn-sm mt-auto">
+                    <a href="index.php?action=model_pakaian" class="btn btn-custom btn-sm mt-auto">
                         Kelola Model <i class="fa-solid fa-arrow-right ms-1"></i>
                     </a>
                 </div>

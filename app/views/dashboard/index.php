@@ -133,7 +133,7 @@ $user = $_SESSION['user'] ?? [
         <!-- Kartu Ringkasan / Menu Cepat -->
         <div class="row g-4">
             <!-- Card 1: Pemesanan -->
-              <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-3">
                 <div class="card card-stat p-4 bg-white h-100">
                     <div class="d-flex align-items-center mb-3">
                         <div class="brand-icon-box p-3 rounded-3 fs-4 me-3">
@@ -144,10 +144,33 @@ $user = $_SESSION['user'] ?? [
                             <h5 class="fw-bold text-dark mb-0">Pemesanan</h5>
                         </div>
                     </div>
-                    <p class="text-muted small mb-3">Kelola pesanan pakaian baru, detail item jahitan, dan cek status
-                        progres produksi.</p>
-                    <a href="index.php?action=pemesanan" class="btn btn-outline-custom btn-sm mt-auto">
+                    <p class="text-muted small mb-3">
+                        Kelola pesanan pakaian baru, detail item jahitan, pembayaran DP/pelunasan, dan status produksi.
+                    </p>
+                    <a href="index.php?action=pemesanan_index" class="btn btn-outline-custom btn-sm mt-auto">
                         Kelola Pemesanan <i class="fa-solid fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card: Cek Status Pesanan -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card card-stat p-4 bg-white h-100">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="brand-icon-box p-3 rounded-3 fs-4 me-3">
+                            <i class="fa-solid fa-magnifying-glass-chart"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-1 small text-uppercase fw-bold">Pelanggan</h6>
+                            <h5 class="fw-bold text-dark mb-0">Cek Status</h5>
+                        </div>
+                    </div>
+                    <p class="text-muted small mb-3">
+                        Lacak progres jahitan, estimasi deadline, dan sisa pembayaran pesanan menggunakan kode
+                        pemesanan.
+                    </p>
+                    <a href="index.php?action=cek_status" class="btn btn-outline-custom btn-sm mt-auto" target="_blank">
+                        Buka Halaman Cek <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
                     </a>
                 </div>
             </div>

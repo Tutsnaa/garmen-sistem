@@ -7,6 +7,7 @@ require_once __DIR__ . '/../app/controllers/AuthController.php';
 require_once __DIR__ . '/../app/controllers/MemberController.php';
 require_once __DIR__ . '/../app/controllers/PenggunaController.php';
 require_once __DIR__ . '/../app/controllers/ModelPakaianController.php';
+require_once __DIR__ . '/../app/controllers/PemesananController.php';
 
 // 2. Tangkap parameter action dari URL (Default ke 'login' jika belum login, atau 'dashboard' jika sudah)
 $action = $_GET['action'] ?? (isset($_SESSION['user']) ? 'dashboard' : 'login');
@@ -179,6 +180,50 @@ switch ($action) {
         cekLogin();
         $modelPakaianController = new ModelPakaianController($pdo);
         $modelPakaianController->delete();
+        break;
+
+// ==========================================
+    // PEMESANAN ROUTES
+    // ==========================================
+    case 'pemesanan':
+    case 'pemesanan_index':
+        cekLogin();
+        $pemesananController = new PemesananController($pdo);
+        $pemesananController->index();
+        break;
+
+    case 'pemesanan_create':
+        cekLogin();
+        $pemesananController = new PemesananController($pdo);
+        $pemesananController->create();
+        break;
+
+    case 'pemesanan_store':
+        cekLogin();
+        $pemesananController = new PemesananController($pdo);
+        $pemesananController->store();
+        break;
+        case 'pemesanan_show':
+        cekLogin();
+        $pemesananController = new PemesananController($pdo);
+        $pemesananController->show();
+        break;
+
+    case 'pemesanan_bayar':
+        cekLogin();
+        $pemesananController = new PemesananController($pdo);
+        $pemesananController->bayar();
+        break;
+
+    case 'pemesanan_update_status':
+        cekLogin();
+        $pemesananController = new PemesananController($pdo);
+        $pemesananController->updateStatus();
+        break;
+        case 'cek_status':
+    case 'pemesanan_cek_status':
+        $pemesananController = new PemesananController($pdo);
+        $pemesananController->cekStatus();
         break;
 
     // ==========================================

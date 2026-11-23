@@ -5,6 +5,7 @@ $telpInput      = $telpInput ?? '';
 $sudahCari      = $sudahCari ?? false;
 $hasilPencarian = $hasilPencarian ?? null;
 $errorPencarian = $errorPencarian ?? null;
+$isLoggedIn     = isset($_SESSION['user']);
 
 $status = $hasilPencarian['status_pemesanan'] ?? 'Pending';
 $progressMap = [
@@ -79,12 +80,19 @@ $progressInfo = $progressMap[$status] ?? ['percent' => 25, 'badge' => 'bg-second
 </head>
 
 <body>
-    <!-- Top Bar Sederhana -->
+    <!-- Top Bar -->
     <nav class="navbar brand-header py-3 shadow-sm">
         <div class="container">
             <span class="navbar-brand mb-0 h5 fw-bold text-white">
                 <i class="fa-solid fa-magnifying-glass-chart me-2"></i>Lacak Status Pesanan
             </span>
+            <div>
+                <?php if ($isLoggedIn): ?>
+                <a href="index.php?action=dashboard" class="btn btn-sm btn-outline-light">
+                    <i class="fa-solid fa-house me-1"></i> Dashboard
+                </a>
+                <?php endif; ?>
+            </div>
         </div>
     </nav>
 
@@ -98,19 +106,19 @@ $progressInfo = $progressMap[$status] ?? ['percent' => 25, 'badge' => 'bg-second
                     melihat status jahitan, deadline, dan ringkasan pembayaran.
                 </p>
 
-                <form action="index.php" method="GET" class="row g-3">
+                <form action="index.php" method="GET" class="row g-3 align-items-end">
                     <input type="hidden" name="action" value="cek_status">
 
-                    <div class="col-md-6">
+                    <div class="col-md-9">
                         <label class="form-label fw-semibold">Kode Pemesanan <span class="text-danger">*</span></label>
                         <input type="text" name="kode" class="form-control text-uppercase"
                             value="<?= htmlspecialchars($kodeInput) ?>" placeholder="Contoh: ORD-20261123-7K9M2X"
-                            required>
+                            autocomplete="off" required>
                     </div>
 
-                    <div class="col-md-2 d-flex align-items-end">
+                    <div class="col-md-3">
                         <button type="submit" class="btn btn-primary-green w-100 py-2">
-                            <i class="fa-solid fa-search me-1"></i> Cari
+                            <i class="fa-solid fa-search me-1"></i> Cari Pesanan
                         </button>
                     </div>
                 </form>
@@ -125,10 +133,10 @@ $progressInfo = $progressMap[$status] ?? ['percent' => 25, 'badge' => 'bg-second
 
         <?php if ($hasilPencarian): ?>
         <?php
-            $totalHarga = (float) ($hasilPencarian['total_harga_keseluruhan'] ?? 0);
-            $sudahBayar = (float) ($hasilPencarian['total_sudah_bayar'] ?? 0);
-            $sisaBayar  = (float) ($hasilPencarian['sisa_bayar'] ?? 0);
-            $details    = $hasilPencarian['details'] ?? [];
+            $totalHarga  = (float) ($hasilPencarian['total_harga_keseluruhan'] ?? 0);
+            $sudahBayar  = (float) ($hasilPencarian['total_sudah_bayar'] ?? 0);
+            $sisaBayar   = (float) ($hasilPencarian['sisa_bayar'] ?? 0);
+            $details     = $hasilPencarian['details'] ?? [];
             $pembayarans = $hasilPencarian['pembayarans'] ?? [];
             ?>
 

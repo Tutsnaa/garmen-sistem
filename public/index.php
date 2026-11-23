@@ -220,7 +220,10 @@ switch ($action) {
         $pemesananController = new PemesananController($pdo);
         $pemesananController->updateStatus();
         break;
-        case 'cek_status':
+        // ==========================================
+    // PUBLIC PELANGGAN ROUTES (TANPA LOGIN)
+    // ==========================================
+    case 'cek_status':
     case 'pemesanan_cek_status':
         $pemesananController = new PemesananController($pdo);
         $pemesananController->cekStatus();
